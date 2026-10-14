@@ -1,12 +1,17 @@
 //preview: python -m http.server
 
 let albinball;
-let gravity = 4;
+let albinballSprite;
+let bumpers = [];
+let gravity = 2;
 
-function setup() {
+async function setup() {
   createCanvas(windowWidth-100, windowHeight-100);
+  albinballSprite = await loadImage("/assets/albinball.png");
+  angleMode(DEGREES);
   background(30);
-  albinball = new Albinson(width / 2, height / 2, 40);
+  albinball = new Albinson(width / 2, height / 2, 50);
+  bumpers.push(new Albumper(width / 2, height / 3, 100));
 }
 
 function draw() {
@@ -14,6 +19,8 @@ function draw() {
   albinball.update();   // Calculate physics
   albinball.checkKeys(); // Check for keyboard input
   albinball.display();    // Draw the ball
+
+  bumpers[0].display();
 }
 
 class Albinson {
@@ -22,6 +29,7 @@ class Albinson {
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.r = r;
+    this.angle = 0;
     this.topSpeed = 60;
     this.friction = 0.99; 
   }
@@ -53,19 +61,34 @@ class Albinson {
     
     if(this.pos.y > height - this.r / 2) {
       this.pos.y = height - this.r / 2;
+      this.vel.x *= -0.9;
       this.vel.y *= -0.9;
     }
-
-    // 4. Apply friction (velocity decay)
-    this.vel.mult(this.friction);
     
     // 5. Reset acceleration for the next frame
     this.acc.mult(0);
   }
 
   display() {
-    fill(255, 150, 0);
-    noStroke();
-    ellipse(this.pos.x, this.pos.y, this.r);
+    // fill(255, 150, 0);
+    // noStroke();
+    // ellipse(this.pos.x, this.pos.y, this.r);
+    imageMode(CENTER);
+    angle++
+    rotate(angle);
+    image(albinballSprite, this.pos.x, this.pos.y, this.r * 1.5, this.r * 1.5);
+    rotate(-angle);
+  }
+}
+
+class Albumper {
+  constructor(x, y, r) {
+    this.pos = createVector(x, y);
+    this.radius = r;
+  }
+
+  display() {
+    fill("#15b100");
+    ellipse(this.pos.x, this.pos.y, this.radius);
   }
 }
