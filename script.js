@@ -73,11 +73,18 @@ class Albinson {
     // fill(255, 150, 0);
     // noStroke();
     // ellipse(this.pos.x, this.pos.y, this.r);
+
+    // i was going to rotate the image so that the ball spins but p5 sucks
+    // and there's not a elegant way to do this so like maybe if i have
+    // extra time i can get it to work??? probably wont tho it will make a lot of bugs probably
+
     imageMode(CENTER);
-    angle++
-    rotate(angle);
+    // this.angle++
+    // translate(this.pos.x, this.pos.y);
+    // rotate(this.angle);
     image(albinballSprite, this.pos.x, this.pos.y, this.r * 1.5, this.r * 1.5);
-    rotate(-angle);
+    // rotate(-this.angle);
+    // translate(-this.pos.x, -this.pos.y);
   }
 }
 
