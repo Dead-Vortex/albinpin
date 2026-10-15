@@ -3,24 +3,39 @@
 let albinball;
 let albinballSprite;
 let bumpers = [];
-let gravity = 2;
 
 async function setup() {
-  createCanvas(windowWidth-100, windowHeight-100);
-  albinballSprite = await loadImage("/assets/albinball.png");
+  new Canvas(windowWidth - 100, windowHeight - 100);
+  world.gravity.y = 10
   angleMode(DEGREES);
   background(30);
-  albinball = new Albinson(width / 2, height / 2, 50);
-  bumpers.push(new Albumper(width / 2, height / 3, 100));
+  albinball = new Sprite();
+  albinball.diameter = 75;
+  albinball.img = "/assets/albinball.png";
+  albinball.img.scale = 0.5;
+  albinball.physics = DYN
+  albinball.debug = true
+  floor = new Sprite();
+  floor.y = height;
+  floor.w = 2300;
+  floor.h = 5;
+  floor.rotation = 45;
+  floor.physics = STATIC;
+  // bumpers.push(new Albumper(width / 2, height / 3, 100));
 }
 
 function draw() {
   background(30);
-  albinball.update();   // Calculate physics
-  albinball.checkKeys(); // Check for keyboard input
-  albinball.display();    // Draw the ball
+  albinball = new Sprite();
+  albinball.diameter = 75;
+  albinball.img = "/assets/albinball.png";
+  albinball.img.scale = 0.5;
+  albinball.physics = DYN
+  // albinball.update();   // Calculate physics
+  // albinball.checkKeys(); // Check for keyboard input
+  // albinball.display();    // Draw the ball
 
-  bumpers[0].display();
+  // bumpers[0].display();
 }
 
 class Albinson {
