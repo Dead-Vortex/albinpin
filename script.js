@@ -3,29 +3,124 @@
 let albinball;
 let albinballSprite;
 let bumpers;
+let score = 0;
 
 function setup() {
-  new Canvas(windowWidth - 100, windowHeight - 100);
+  new Canvas(600, 750);
   world.gravity.y = 10
-  angleMode(DEGREES);
   background(30);
+
+  new Sprite(width / 2, height / 2, [300, 0, 200, -90, 100, 90, 400, -90, 141.421356, -45, 300, -45, 141.421356, -45, 375, -45, 141.421356, -45, 125, 45], KIN);
+
   albinball = new Sprite();
-  albinball.diameter = 75;
+  albinball.pos.x = 500;
+  albinball.pos.y = 500;
+  albinball.diameter = 40;
   albinball.img = "/assets/albinball.png";
-  albinball.img.scale = 0.5;
+  albinball.img.scale = 0.25;
   albinball.physics = DYN;
+  albinball.bounciness = 0.75;
 
-  bumpers = new Sprite(width / 2, height / 2 + 100, 50, STATIC);
+  bumpers = new Group();
+  bumpers.diameter = 75;
+  bumpers.physics = STATIC;
+  bumpers.debug = true;
+
+  new bumpers.Sprite(300, 375);
+  bumpers[0].img = "/assets/karel.png";
+  bumpers[0].img.scale = 0.2
+
+  new bumpers.Sprite(200, 200)
+  bumpers[1].img = "/assets/codehs.png";
+  bumpers[1].img.scale = 0.25
+
+  new bumpers.Sprite(400, 200)
+  bumpers[2].img = "/assets/snack.png";
+  bumpers[2].img.scale = 0.15
+
+  flipper = new Sprite(
+    480,
+    555,
+    [
+      [0, -25],
+      [-100, 12.5],
+      [0, 25],
+      [100, 12.5],
+      [0, -25],
+    ],
+    "k"
+  );
+
+  flipper.addCollider(-60, 0, 25);
+  flipper.addCollider(40, 0, 50);
+
+  flipper.offset.x = -40;
+  flipper.rotation = -30;
+
+  flipper.img = "/assets/albinFingerRight.png";
+  flipper.img.scale.x = 0.25;
+  flipper.img.scale.y = 0.25;
+  flipper.img.offset.x = -120;
+  flipper.debug = true;
+
+  flipper2 = new Sprite(
+    120,
+    555,
+    [
+      [0, -25],
+      [100, 12.5],
+      [0, 25],
+      [-100, 12.5],
+      [0, -25],
+    ],
+    "k"
+  );
+
+  flipper2.addCollider(60, 0, 25);
+  flipper2.addCollider(-40, 0, 50);
+
+  flipper2.offset.x = 40;
+  flipper2.rotation = 30;
+
+  flipper2.img = "/assets/albinFinger.png";
+  flipper2.img.scale.x = 0.25;
+  flipper2.img.scale.y = 0.25;
+  flipper2.img.offset.x = 120;
+  flipper2.debug = true;
+
+  albinball.applyForce(0, 3000);
 }
 
-function bumper(){
-  if (bumpers.colliding(albinBall) > 1){
-    albinBall.vel.y = -9.8;
-    }
-}
+
 function draw() {
   background(30);
-  bumper;
+  if (kb.pressing("arrow-right")) {
+    flipper.rotateTo(20, 8);
+  }
+  if (kb.released("arrow-right")) {
+    flipper.rotateTo(-30, -8);
+  }
+  if (kb.pressing("arrow-left")) {
+    flipper2.rotateTo(-20, -8);
+  }
+  if (kb.released("arrow-left")) {
+    flipper2.rotateTo(30, 8);
+  }
+
+  if(bumpers.collides(albinball)) {
+    score += 100;
+  }
+
+  if(albinball.pos.y > 685) {
+    albinball.pos.x = 500;
+    albinball.pos.y = 500;
+    albinball.vel.x = 0;
+    albinball.vel.y = 1000;
+  }
+  
+  fill("white");
+  textSize(50)
+  text(score, 20, 50)
 }
 
 
