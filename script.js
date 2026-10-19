@@ -24,7 +24,6 @@ function setup() {
   bumpers = new Group();
   bumpers.diameter = 75;
   bumpers.physics = STATIC;
-  bumpers.debug = true;
 
   new bumpers.Sprite(300, 375);
   bumpers[0].img = "/assets/karel.png";
