@@ -60,7 +60,6 @@ function setup() {
   flipper.img.scale.x = 0.25;
   flipper.img.scale.y = 0.25;
   flipper.img.offset.x = -120;
-  flipper.debug = true;
 
   flipper2 = new Sprite(
     120,
@@ -85,7 +84,6 @@ function setup() {
   flipper2.img.scale.x = 0.25;
   flipper2.img.scale.y = 0.25;
   flipper2.img.offset.x = 120;
-  flipper2.debug = true;
 
   albinball.applyForce(0, 3000);
 }
